@@ -31,7 +31,7 @@ public class ResourceCentreTest {
 		chromebookList= new ArrayList<Chromebook>();
 	}
 
-	
+	//ArielWang
 	@Test
 	public void addCamcorderTest() {
 		// Item list is not null, so that can add a new item
@@ -82,12 +82,47 @@ public class ResourceCentreTest {
 	public void retrieveAllChromebookTest() {
 		//fail("Not yet implemented");
 		// write your code here
+		// Test if Item list is not null but empty, so that can add a new item
+				assertNotNull("Test if there is valid Camcorder arraylist to add to", chromebookList);
+				
+				//test if the list of chromebook retrieved from the SourceCentre is empty
+						String allChromebook= ResourceCentre.retrieveAllChromebook(chromebookList);
+						String testOutput = "";
+						assertEquals("Check that ViewAllChromebooklist", testOutput, allChromebook);
+						
+				//Given an empty list, after adding 2 items, test if the size of the list is 2
+				ResourceCentre.addChromebook(chromebookList, cb1);
+				ResourceCentre.addChromebook(chromebookList, cb2);
+				assertEquals("Test if that Chromebook arraylist size is 2?", 2, chromebookList.size());
+				
+				//test if the expected output string same as the list of chromebook retrieved from the SourceCentre
+				allChromebook= ResourceCentre.retrieveAllChromebook(chromebookList);
+
+				testOutput = String.format("%-10s %-30s %-10s %-10s %-20s\n","CB0011", "My Google Chromebook 1st", "Mac OS");
+				testOutput += String.format("%-10s %-30s %-10s %-10s %-20s\n","CB0012", "SAMSUNG Chromebook 4+", "Win 10");
+			
+				assertEquals("Check that ViewAllChromebooklist", testOutput, allChromebook);
 	}
 
 	@Test
 	public void doLoanCamcorderTest() {
 		//fail("Not yet implemented");
 		// write your code here
+		// Item list is not null, so that can loan an item
+
+        assertNotNull("Test if there is valid Camcorder arraylist to loan", camcorderList);
+
+ 
+
+        //After the CC001 in camcorderList is loaned with a due date of 10, the due date changed
+
+        ResourceCentre.addCamcorder(camcorderList, cc1);
+
+        boolean op01 = ResourceCentre.doLoanCamcorder(camcorderList, "CC0011", "21-7-2020");
+        assertEquals(true, op01);
+
+        boolean op02 = ResourceCentre.doLoanCamcorder(camcorderList, "CC0011", "29-7-2020");
+        assertEquals(false, op02);
 		
 	}
 	
