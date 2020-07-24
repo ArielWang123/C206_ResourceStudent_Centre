@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import org.junit.After;
@@ -103,33 +105,76 @@ public class ResourceCentreTest {
 			
 				assertEquals("Check that ViewAllChromebooklist", testOutput, allChromebook);
 	}
-
+	
+	// done by Ariel
 	@Test
 	public void doLoanCamcorderTest() {
 		//fail("Not yet implemented");
 		// write your code here
+		
 		// Item list is not null, so that can loan an item
-
-        assertNotNull("Test if there is valid Camcorder arraylist to loan", camcorderList);
-
+		assertNotNull("Test if there is valid Camcorder arraylist to loan", camcorderList);
+		
+		//Get due date by adding up 10 days to current date 
+		String dueDate = LocalDate.now().plusDays(10).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
  
 
-        //After the CC001 in camcorderList is loaned with a due date of 10, the due date changed
+        // Add both camcorders to the list
+		ResourceCentre.addCamcorder(camcorderList, cc1);
+		ResourceCentre.addCamcorder(camcorderList, cc2);
+		
+		//successfully loan out cc1
+		boolean Scc1 = ResourceCentre.doLoanCamcorder(camcorderList, cc1.getAssetTag(), dueDate);
+		assertTrue("Cc1 loaned out successfully", Scc1);
 
-        ResourceCentre.addCamcorder(camcorderList, cc1);
-
-        boolean op01 = ResourceCentre.doLoanCamcorder(camcorderList, "CC0011", "21-7-2020");
-        assertEquals(true, op01);
-
-        boolean op02 = ResourceCentre.doLoanCamcorder(camcorderList, "CC0011", "29-7-2020");
-        assertEquals(false, op02);
+       //failed to loan out cc1
+		boolean Fcc1 = ResourceCentre.doLoanCamcorder(camcorderList, cc1.getAssetTag(), dueDate);
+		assertFalse("Cc1 failed to loaned out", Fcc1);
+		
+		//successfully loan out cc2
+		boolean Scc2 = ResourceCentre.doLoanCamcorder(camcorderList, cc2.getAssetTag(), dueDate);
+		assertTrue("Cc2 loaned out successfully", Scc2);
+		
+		//failed to loaned out cc2
+		boolean Fcc2 = ResourceCentre.doLoanCamcorder(camcorderList, cc2.getAssetTag(), dueDate);
+		assertFalse("Cc2 failed to loaned out", Fcc2);
+        
 		
 	}
-	
+	// done by Ariel
 	@Test
 	public void doLoanChromebookTest() {
 		//fail("Not yet implemented");
 		// write your code here
+		
+		// Item list is not null, so that can loan an item
+				assertNotNull("Test if there is valid Chromebook arraylist to loan", chromebookList);
+				
+				//Get due date by adding up 10 days to current date 
+				String dueDate = LocalDate.now().plusDays(10).format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+		 
+
+		        // Add both chromebooks to the list
+				ResourceCentre.addChromebook(chromebookList, cb1);
+				ResourceCentre.addChromebook(chromebookList, cb2);
+				
+				//successfully loan out cb1
+				boolean Scb1 = ResourceCentre.doLoanChromebook(chromebookList, cb1.getAssetTag(), dueDate);
+				assertTrue("Cb1 loaned out successfully", Scb1);
+
+		       //failed to loan out cb1
+				boolean Fcb1 = ResourceCentre.doLoanChromebook(chromebookList, cb1.getAssetTag(), dueDate);
+				assertFalse("Cb1 failed to loaned out", Fcb1);
+				
+				//successfully loan out cb2
+				boolean Scb2 = ResourceCentre.doLoanChromebook(chromebookList, cb2.getAssetTag(), dueDate);
+				assertTrue("Cb2 loaned out successfully", Scb2);
+				
+				//failed to loaned out cb2
+				boolean Fcb2 = ResourceCentre.doLoanChromebook(chromebookList, cb2.getAssetTag(), dueDate);
+				assertFalse("Cb2 failed to loaned out", Fcb2);
+		        
+		
 	}
 	
 	@Test
@@ -137,11 +182,17 @@ public class ResourceCentreTest {
 		//fail("Not yet implemented");
 		// write your code here
 		
+
 	}
 	@Test
 	public void doReturnChromebookTest() {
 		//fail("Not yet implemented");
 		// write your code here
+		
+		//Once item return, set the list to become null
+		assertNull("Test to return chromebookList become nul", chromebookList);
+		
+		
 	}
 	
 	@After
