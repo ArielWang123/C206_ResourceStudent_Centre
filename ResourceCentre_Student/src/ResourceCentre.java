@@ -123,7 +123,7 @@ public class ResourceCentre {
 	}
 
 	//================================= Option 1 View =================================
-	//ArielWang
+	//ArielWang 24/7/2020
 	public static String retrieveAllCamcorder(ArrayList<Camcorder> camcorderList) {
 		String output = "";
 
